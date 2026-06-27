@@ -1,9 +1,15 @@
 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mezu and Knights</title>
+    
+    <title>Mezu and Knights - Manga by Irash</title>
+    <meta name="description" content="Read Mezu and Knights, an epic manga written by Irash featuring funny jokes, sad moments, and epic fights of Mezu Fushira and his elemental knights!">
+    <meta name="keywords" content="Mezu and Knights, Irash, Manga, Mezu Fushira, Fire Knight, Lightning Knight, Wind Knight, Water Knight">
+    <meta name="author" content="Irash">
+
     <style>
         body {
             text-align: center;
@@ -80,6 +86,68 @@
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(255, 60, 0, 0.3);
         }
+
+        /* --- Rating System Styles --- */
+        .rating-box {
+            background-color: #1a1a1a;
+            max-width: 400px;
+            margin: 50px auto 30px auto;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #ffcc00;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.2);
+        }
+
+        .rating-box h3 {
+            color: #ffcc00;
+            margin-top: 0;
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .stars {
+            font-size: 40px;
+            cursor: pointer;
+            user-select: none;
+            margin-bottom: 15px;
+        }
+
+        .star {
+            color: #444;
+            transition: color 0.2s ease;
+        }
+
+        .star:hover,
+        .star.selected {
+            color: #ffcc00;
+        }
+
+        /* Submit බටන් එකේ ස්ටයිල් */
+        .submit-btn {
+            background-color: #ff3c00;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-size: 16px;
+            font-family: 'Arial Black', sans-serif;
+            text-transform: uppercase;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+            box-shadow: 0 4px 10px rgba(255, 60, 0, 0.4);
+        }
+
+        .submit-btn:hover {
+            background-color: #ffcc00;
+            color: black;
+        }
+
+        .thank-you-msg {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 16px;
+            color: #00ffcc;
+            margin-top: 15px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -92,24 +160,106 @@
 
     <h2>Mezu and his knights</h2>
     
-    <img src="mezu.png" alt="Mezu Image" width="400">
+    <img src="mezu.png" alt="Mezu Fushira - Main Character of Mezu and Knights" width="400">
     <h3>This is Mezu</h3>
     
-    <img src="goki.png" alt="Goki Image" width="400">
+    <img src="goki.png" alt="Goki the Fire Knight - Mezu and Knights" width="400">
     <h4>Goki is the Fire Knight</h4>
     <p>His weapon is a sword. He can control fire.</p>
     
-    <img src="raisen.png" alt="Raisen Image" width="400">
+    <img src="raisen.png" alt="Raisen the Lightning Knight - Mezu and Knights" width="400">
     <h4>Raisen is the Lightning Knight</h4>
     <p>He has a nunchaku. He can control lightning.</p>
 
-    <img src="gale.png" alt="Gale Image" width="400">
+    <img src="gale.png" alt="Gale the Wind Knight - Mezu and Knights" width="400">
     <h4>Gale is the Wind Knight</h4>
     <p>He has a wind bow and arrows. He can control wind.</p>
 
-    <img src="torrent.png" alt="Torrent Image" width="400">
+    <img src="torrent.png" alt="Torrent the Water Knight - Mezu and Knights" width="400">
     <h4>Torrent is the Water Knight</h4>
     <p>He has water knives. He can control water.</p>
+
+    <div class="rating-box">
+        <h3>Rate this Manga!</h3>
+        <div class="stars" id="star-container">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+        </div>
+        <button class="submit-btn" id="submit-rating">Submit</button>
+        <div class="thank-you-msg" id="thank-you">Rating Submitted! Thank you! ⭐</div>
+    </div>
+
+    <script>
+        const stars = document.querySelectorAll('.star');
+        const submitBtn = document.getElementById('submit-rating');
+        const thankYouMsg = document.getElementById('thank-you');
+        let selectedRating = 0;
+
+        stars.forEach(star => {
+            star.addEventListener('mouseover', function() {
+                highlightStars(this.getAttribute('data-value'));
+            });
+
+            star.addEventListener('mouseout', function() {
+                resetStars();
+            });
+
+            star.addEventListener('click', function() {
+                selectedRating = this.getAttribute('data-value');
+                stars.forEach((s, index) => {
+                    if (index < selectedRating) {
+                        s.classList.add('selected');
+                    } else {
+                        s.classList.remove('selected');
+                    }
+                });
+            });
+        });
+
+        function highlightStars(value) {
+            stars.forEach((star, index) => {
+                star.style.color = (index < value) ? '#ffcc00' : '#444';
+            });
+        }
+
+        function resetStars() {
+            stars.forEach((star, index) => {
+                star.style.color = (index < selectedRating) ? '#ffcc00' : '#444';
+            });
+        }
+
+        // Google Form Submission
+        submitBtn.addEventListener('click', function() {
+            if (selectedRating === 0) {
+                alert("Please select a star rating first!");
+                return;
+            }
+
+            // ඔයාගේ Google Form එකේ ID සහ Entry ID එක මෙතනට ඇතුළත් කරලා තියෙන්නේ
+            const formID = "1FAIpQLSeIHHynFhG2uI9H7fH06OWTAqXG-JXzJMqKqOJux0IPtnNRvQ"; 
+            const entryID = "entry.451870787"; 
+
+            const formUrl = `https://docs.google.com/forms/d/e/${formID}/formResponse`;
+            
+            const formData = new FormData();
+            formData.append(entryID, selectedRating);
+
+            fetch(formUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData
+            }).then(() => {
+                submitBtn.style.display = 'none';
+                document.getElementById('star-container').style.pointerEvents = 'none'; 
+                thankYouMsg.style.display = 'block';
+            }).catch(err => {
+                alert("Something went wrong. Try again!");
+            });
+        });
+    </script>
 
 </body>
 </html>
